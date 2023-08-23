@@ -29,18 +29,7 @@ pipeline {
 			}
 		}
     
-        
-        stage('Deploy') {
-            steps {
-                sh 'java -jar target/myapp.jar'
-            }
-        }
     }
     
-    post {
-        always {
-            cleanWs() // Clean workspace after the pipeline finishes
-        }
-    }
 
 }
