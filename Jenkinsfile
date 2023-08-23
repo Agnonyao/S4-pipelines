@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
             DOCKERHUB_CREDENTIALS=credentials('dockerhub')    
+    }
     stages {
         stage('SonarQube analysis') {
             agent {
@@ -41,5 +42,5 @@ pipeline {
             cleanWs() // Clean workspace after the pipeline finishes
         }
     }
-}
+
 }
