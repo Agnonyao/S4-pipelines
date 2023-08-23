@@ -1,6 +1,7 @@
 pipeline {
     agent any
-    
+    environment {
+            DOCKERHUB_CREDENTIALS=credentials('dockerhub')    
     stages {
         stage('SonarQube analysis') {
             agent {
@@ -20,11 +21,13 @@ pipeline {
             }
         }
         
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
+        stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+    
         
         stage('Deploy') {
             steps {
@@ -38,4 +41,5 @@ pipeline {
             cleanWs() // Clean workspace after the pipeline finishes
         }
     }
+}
 }
